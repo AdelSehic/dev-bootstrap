@@ -1,0 +1,9 @@
+/*
+!/.gitignore
+!/alacritty/
+!/awesome/
+!/fish/
+!/htop/
+!/install.sh*
+!/nvim/
+!/tmux/
