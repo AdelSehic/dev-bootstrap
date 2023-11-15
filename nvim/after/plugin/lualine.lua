@@ -135,20 +135,12 @@ ins_left {
 ins_left {
     'filename',
     cond = conditions.buffer_not_empty,
-    color = { fg = colors.blue },
+    color = { fg = colors.magenta, gui = 'bold' },
 }
 
 ins_left { 'location' }
 
 ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
-
--- Insert mid section. You can make any number of sections in neovim :)
--- for lualine it's any number greater then 2
-ins_left {
-    function()
-        return '%='
-    end,
-}
 
 ins_left {
     'diagnostics',
@@ -159,6 +151,14 @@ ins_left {
         color_warn = { fg = colors.yellow },
         color_info = { fg = colors.cyan },
     },
+}
+
+-- Insert mid section. You can make any number of sections in neovim :)
+-- for lualine it's any number greater then 2
+ins_left {
+    function()
+        return '%='
+    end,
 }
 
 -- ins_left {

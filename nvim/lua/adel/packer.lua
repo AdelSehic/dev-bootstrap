@@ -36,30 +36,28 @@ return require('packer').startup(function(use)
     use('theprimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-fugitive')
+    use('williamboman/mason.nvim')
+    use('williamboman/mason-lspconfig.nvim')
+    
 
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
         requires = {
-        -- LSP Support
+            -- LSP Support
             { 'neovim/nvim-lspconfig' },
-        -- LSP Configuration
-            {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'},
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
-            { 'hrsh7th/cmp-path' },
             { 'saadparwaiz1/cmp_luasnip' },
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' },
-            {'lvimuser/lsp-inlayhints.nvim'},
-            { 'lukas-reineke/lsp-format.nvim' },
         }
     }
-
+    use{ 'hrsh7th/cmp-path', after = "nvim-cmp" }
+    
     use('nvim-lualine/lualine.nvim')
     use('sindrets/diffview.nvim')
     use('lewis6991/gitsigns.nvim')
@@ -68,6 +66,7 @@ return require('packer').startup(function(use)
     use('nvim-tree/nvim-tree.lua')
     use('nvim-tree/nvim-web-devicons')
     use('jose-elias-alvarez/null-ls.nvim')
+    use('lukas-reineke/lsp-format.nvim')
     use('terrortylor/nvim-comment')
     use { 'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons' }
     use('famiu/bufdelete.nvim')
@@ -108,7 +107,7 @@ return require('packer').startup(function(use)
         wants = { 'nvim-treesitter' }, -- or require if not used so far
         after = { 'nvim-cmp' }         -- if a completion plugin is using tabs load it before
     }
-    
+
     use({
         "nvim-treesitter/nvim-treesitter-textobjects",
         after = "nvim-treesitter",
@@ -120,6 +119,7 @@ return require('packer').startup(function(use)
         after = "nvim-treesitter",
         requires = "nvim-treesitter/nvim-treesitter",
     })
- 
     use('machakann/vim-sandwich')
+    use('lvimuser/lsp-inlayhints.nvim')
+    use('lambdalisue/suda.vim')
 end)
