@@ -10,7 +10,9 @@ return require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.4',
         -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
+        requires = { { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope-live-grep-args.nvim' }
+        }
     }
 
     use({
@@ -24,7 +26,7 @@ return require('packer').startup(function(use)
     use({
         "jacoborus/tender.vim",
         as = "tender",
-        config = function ()
+        config = function()
             vim.cmd('colorscheme tender')
         end
     })
@@ -38,7 +40,7 @@ return require('packer').startup(function(use)
     use('tpope/vim-fugitive')
     use('williamboman/mason.nvim')
     use('williamboman/mason-lspconfig.nvim')
-    
+
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -51,13 +53,14 @@ return require('packer').startup(function(use)
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-nvim-lua' },
+            { 'hrsh7th/cmp-cmdline' },
+            { 'hrsh7th/cmp-path' },
             { 'saadparwaiz1/cmp_luasnip' },
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' },
         }
     }
-    use{ 'hrsh7th/cmp-path', after = "nvim-cmp" }
-    
+
     use('nvim-lualine/lualine.nvim')
     use('sindrets/diffview.nvim')
     use('lewis6991/gitsigns.nvim')
@@ -122,4 +125,5 @@ return require('packer').startup(function(use)
     use('machakann/vim-sandwich')
     use('lvimuser/lsp-inlayhints.nvim')
     use('lambdalisue/suda.vim')
+    use('arturgoms/moonbow.nvim')
 end)
