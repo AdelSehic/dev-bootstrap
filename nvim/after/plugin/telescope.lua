@@ -16,7 +16,7 @@ telescope.setup({
             auto_quoting = true,
             mappings = {
                 i = {
-                    ["<C-c>"] = lgaa.quote_prompt({ postfix = ' -i' }),
+                    ["<C-l>"] = lgaa.quote_prompt({ postfix = ' -i' }),
                 }
             }
         }
@@ -36,4 +36,3 @@ end)
 vim.keymap.set('n', '<leader>frr', builtin.lsp_references, {})
 vim.keymap.set('n', '<leader>fc', builtin.colorscheme, {})
 vim.keymap.set('n', '<leader>fqf', builtin.quickfix, {})
-
