@@ -20,11 +20,18 @@ telescope.setup({
                 }
             }
         }
+    },
+    pickers = {
+        live_grep = {
+            additional_args = function ()
+                return {"-i"}
+            end
+        }
     }
 })
 
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
--- vim.keymap.set('n', '<leader>f/', telescope.extenstions.live_grep_args.live_grep_args,  {noremap = true})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep,  {})
 vim.keymap.set("n", "<leader>f/", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", {})
 vim.keymap.set('n', '<leader>fw', lgas.grep_word_under_cursor)
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
