@@ -430,39 +430,39 @@ function theme.at_screen_connect(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, awful.util.tasklist_buttons, { bg_focus = "#00000000" })
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(25), bg = gears.color.create_png_pattern(theme.panelbg) })
+    -- s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(25), bg = gears.color.create_png_pattern(theme.panelbg) })
 
     -- Add widgets to the wibox
-    s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        expand = "none",
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mypromptbox,
-            tspace1,
-            s.mytasklist,
-        },
-        { -- Middle widgets
-            layout = wibox.layout.flex.horizontal,
-            max_widget_size = 1500,
-            mytextclock
-        },
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            wibox.widget { nil, nil, theme.mpd.widget, layout = wibox.layout.align.horizontal },
-            rspace0,
-            --theme.weather.icon,
-            --theme.weather.widget,
-            rspace1,
-            wificon,
-            rspace0,
-            volicon,
-            rspace2,
-            baticon,
-            rspace3,
-            wibox.widget.systray(),
-        },
-    }
+    -- s.mywibox:setup {
+    --     layout = wibox.layout.align.horizontal,
+    --     expand = "none",
+    --     { -- Left widgets
+    --         layout = wibox.layout.fixed.horizontal,
+    --         s.mypromptbox,
+    --         tspace1,
+    --         s.mytasklist,
+    --     },
+    --     { -- Middle widgets
+    --         layout = wibox.layout.flex.horizontal,
+    --         max_widget_size = 1500,
+    --         mytextclock
+    --     },
+    --     { -- Right widgets
+    --         layout = wibox.layout.fixed.horizontal,
+    --         wibox.widget { nil, nil, theme.mpd.widget, layout = wibox.layout.align.horizontal },
+    --         rspace0,
+    --         --theme.weather.icon,
+    --         --theme.weather.widget,
+    --         rspace1,
+    --         wificon,
+    --         rspace0,
+    --         volicon,
+    --         rspace2,
+    --         baticon,
+    --         rspace3,
+    --         wibox.widget.systray(),
+    --     },
+    -- }
 
     gears.timer.delayed_call(theme.vertical_wibox, s)
 end

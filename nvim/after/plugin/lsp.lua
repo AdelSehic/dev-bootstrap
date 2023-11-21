@@ -75,6 +75,9 @@ cmp.setup({
     completion = {
         completeopt = 'menu,menuone,noinsert'
     },
+    experimental = {
+        ghost_text = true,
+    },
 })
 
 cmp.setup.cmdline({ '/', '?' }, {
