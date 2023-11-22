@@ -17,7 +17,7 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
 theme.wallpaper                                 = theme.dir .. "/wall.png"
-theme.font                                      = "Terminus 9"
+theme.font                                      = "JetBrains Mono NL Medium 9"
 theme.fg_normal                                 = "#DDDDFF"
 theme.fg_focus                                  = "#EA6F81"
 theme.fg_urgent                                 = "#CC9393"
@@ -90,7 +90,7 @@ theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/
 
 local markup = lain.util.markup
 local separators = lain.util.separators
-
+local widgets = require("widgets")
 local keyboardlayout = awful.widget.keyboardlayout:new()
 
 -- Textclock
@@ -133,8 +133,17 @@ theme.mail = lain.widget.imap({
 })
 --]]
 
+local spotify_bar = widgets.spotify_bar({
+    timeout = 1,
+    font = {
+        name = "JetBrains Mono NL Medium",
+        color = "#7cf2a5ff"
+    },
+    separator = ' - ',
+})
+
 -- MPD
-local musicplr = awful.util.terminal .. " -title Music -e ncmpcpp"
+local musicplr = awful.util.terminal .. " spotifycli --title "
 local mpdicon = wibox.widget.imagebox(theme.widget_music)
 mpdicon:buttons(my_table.join(
     awful.button({ "Mod4" }, 1, function () awful.spawn(musicplr) end),
@@ -190,6 +199,7 @@ local tempicon = wibox.widget.imagebox(theme.widget_temp)
 local temp = lain.widget.temp({
     settings = function()
         widget:set_markup(markup.font(theme.font, " " .. coretemp_now .. "°C "))
+        -- awful.widget.watch("cat /sys/class/thermal/thermal_zone6/temp | awk '{printf \"%d\" , $1/1000 }'", 1)
     end
 })
 
@@ -321,14 +331,15 @@ function theme.at_screen_connect(s)
             keyboardlayout,
             spr,
             arrl_ld,
-            wibox.container.background(mpdicon, theme.bg_focus),
-            wibox.container.background(theme.mpd.widget, theme.bg_focus),
+            wibox.container.background(spotify_bar, theme.bg_focus),
+            -- wibox.container.background(theme.mpd.widget, theme.bg_focus),
             arrl_dl,
             volicon,
             theme.volume.widget,
             arrl_ld,
-            wibox.container.background(mailicon, theme.bg_focus),
-            --wibox.container.background(theme.mail.widget, theme.bg_focus),
+            wibox.container.background(baticon, theme.bg_focus),
+            wibox.container.background(bat.widget, theme.bg_focus),
+            -- wibox.container.background(theme.mail.widget, theme.bg_focus),
             arrl_dl,
             memicon,
             mem.widget,
@@ -337,21 +348,22 @@ function theme.at_screen_connect(s)
             wibox.container.background(cpu.widget, theme.bg_focus),
             arrl_dl,
             tempicon,
-            temp.widget,
-            arrl_ld,
-            wibox.container.background(fsicon, theme.bg_focus),
-            --wibox.container.background(theme.fs.widget, theme.bg_focus),
-            arrl_dl,
-            baticon,
-            bat.widget,
+            awful.widget.watch("awk '{printf substr ($0, 0, 2); print \"°C \"}' /sys/class/thermal/thermal_zone6/temp",  1),
+            -- arrl_ld,
+            -- wibox.container.background(fsicon, theme.bg_focus),
+            -- wibox.container.background(theme.fs.widget, theme.bg_focus),
+            -- arrl_dl,
+            -- arrl_dl,
+            -- baticon,
+            -- bat.widget,
             arrl_ld,
             wibox.container.background(neticon, theme.bg_focus),
             wibox.container.background(net.widget, theme.bg_focus),
             arrl_dl,
             clock,
-            spr,
-            arrl_ld,
-            wibox.container.background(s.mylayoutbox, theme.bg_focus),
+            -- spr,
+            -- arrl_ld,
+            -- wibox.container.background(s.mylayoutbox, theme.bg_focus),
         },
     }
 end
