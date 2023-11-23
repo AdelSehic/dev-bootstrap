@@ -5,14 +5,14 @@
 
 --]]
 
-local gears = require("gears")
-local lain  = require("lain")
-local awful = require("awful")
-local wibox = require("wibox")
-local dpi   = require("beautiful.xresources").apply_dpi
+local gears                                     = require("gears")
+local lain                                      = require("lain")
+local awful                                     = require("awful")
+local wibox                                     = require("wibox")
+local dpi                                       = require("beautiful.xresources").apply_dpi
 
-local os = os
-local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
+local os                                        = os
+local my_table                                  = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/powerarrow-dark"
@@ -67,7 +67,8 @@ theme.widget_vol_mute                           = theme.dir .. "/icons/vol_mute.
 theme.widget_mail                               = theme.dir .. "/icons/mail.png"
 theme.widget_mail_on                            = theme.dir .. "/icons/mail_on.png"
 theme.tasklist_plain_task_name                  = true
-theme.tasklist_disable_icon                     = true
+theme.tasklist_disable_icon                     = false
+theme.tasklist_disable_task_name                = true
 theme.useless_gap                               = dpi(0)
 theme.titlebar_close_button_focus               = theme.dir .. "/icons/titlebar/close_focus.png"
 theme.titlebar_close_button_normal              = theme.dir .. "/icons/titlebar/close_normal.png"
@@ -88,14 +89,14 @@ theme.titlebar_maximized_button_normal_active   = theme.dir .. "/icons/titlebar/
 theme.titlebar_maximized_button_focus_inactive  = theme.dir .. "/icons/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/maximized_normal_inactive.png"
 
-local markup = lain.util.markup
-local separators = lain.util.separators
-local widgets = require("widgets")
-local keyboardlayout = awful.widget.keyboardlayout:new()
+local markup                                    = lain.util.markup
+local separators                                = lain.util.separators
+local widgets                                   = require("widgets")
+local keyboardlayout                            = awful.widget.keyboardlayout:new()
 
 -- Textclock
-local clockicon = wibox.widget.imagebox(theme.widget_clock)
-local clock = awful.widget.watch(
+local clockicon                                 = wibox.widget.imagebox(theme.widget_clock)
+local clock                                     = awful.widget.watch(
     "date +'%a %d %b %R'", 60,
     function(widget, stdout)
         widget:set_markup(" " .. markup.font(theme.font, stdout))
@@ -103,7 +104,7 @@ local clock = awful.widget.watch(
 )
 
 -- Calendar
-theme.cal = lain.widget.cal({
+theme.cal                                       = lain.widget.cal({
     attach_to = { clock },
     notification_preset = {
         font = "Terminus 10",
@@ -113,7 +114,7 @@ theme.cal = lain.widget.cal({
 })
 
 -- Mail IMAP check
-local mailicon = wibox.widget.imagebox(theme.widget_mail)
+local mailicon                                  = wibox.widget.imagebox(theme.widget_mail)
 --[[ commented because it needs to be set before use
 mailicon:buttons(my_table.join(awful.button({ }, 1, function () awful.spawn(mail) end)))
 theme.mail = lain.widget.imap({
@@ -146,16 +147,16 @@ local spotify_bar = widgets.spotify_bar({
 local musicplr = awful.util.terminal .. " spotifycli --title "
 local mpdicon = wibox.widget.imagebox(theme.widget_music)
 mpdicon:buttons(my_table.join(
-    awful.button({ "Mod4" }, 1, function () awful.spawn(musicplr) end),
-    awful.button({ }, 1, function ()
+    awful.button({ "Mod4" }, 1, function() awful.spawn(musicplr) end),
+    awful.button({}, 1, function()
         os.execute("mpc prev")
         theme.mpd.update()
     end),
-    awful.button({ }, 2, function ()
+    awful.button({}, 2, function()
         os.execute("mpc toggle")
         theme.mpd.update()
     end),
-    awful.button({ }, 3, function ()
+    awful.button({}, 3, function()
         os.execute("mpc next")
         theme.mpd.update()
     end)))
@@ -163,7 +164,7 @@ theme.mpd = lain.widget.mpd({
     settings = function()
         if mpd_now.state == "play" then
             artist = " " .. mpd_now.artist .. " "
-            title  = mpd_now.title  .. " "
+            title  = mpd_now.title .. " "
             mpdicon:set_image(theme.widget_music_on)
         elseif mpd_now.state == "pause" then
             artist = " mpd "
@@ -254,24 +255,24 @@ theme.volume = lain.widget.alsa({
     end
 })
 theme.volume.widget:buttons(awful.util.table.join(
-                               awful.button({}, 4, function ()
-                                     awful.util.spawn("amixer set Master 1%+")
-                                     theme.volume.update()
-                               end),
-                               awful.button({}, 5, function ()
-                                     awful.util.spawn("amixer set Master 1%-")
-                                     theme.volume.update()
-                               end)
+    awful.button({}, 4, function()
+        awful.util.spawn("amixer set Master 1%+")
+        theme.volume.update()
+    end),
+    awful.button({}, 5, function()
+        awful.util.spawn("amixer set Master 1%-")
+        theme.volume.update()
+    end)
 ))
 
 -- Net
 local neticon = wibox.widget.imagebox(theme.widget_net)
-local net = lain.widget.net({
+local net     = lain.widget.net({
     settings = function()
         widget:set_markup(markup.font(theme.font,
-                          markup("#7AC82E", " " .. string.format("%06.1f", net_now.received))
-                          .. " " ..
-                          markup("#46A8C3", " " .. string.format("%06.1f", net_now.sent) .. " ")))
+            markup("#7AC82E", " " .. string.format("%06.1f", net_now.received))
+            .. " " ..
+            markup("#46A8C3", " " .. string.format("%06.1f", net_now.sent) .. " ")))
     end
 })
 
@@ -300,16 +301,68 @@ function theme.at_screen_connect(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(my_table.join(
-                           awful.button({}, 1, function () awful.layout.inc( 1) end),
-                           awful.button({}, 2, function () awful.layout.set( awful.layout.layouts[1] ) end),
-                           awful.button({}, 3, function () awful.layout.inc(-1) end),
-                           awful.button({}, 4, function () awful.layout.inc( 1) end),
-                           awful.button({}, 5, function () awful.layout.inc(-1) end)))
+        awful.button({}, 1, function() awful.layout.inc(1) end),
+        awful.button({}, 2, function() awful.layout.set(awful.layout.layouts[1]) end),
+        awful.button({}, 3, function() awful.layout.inc(-1) end),
+        awful.button({}, 4, function() awful.layout.inc(1) end),
+        awful.button({}, 5, function() awful.layout.inc(-1) end)))
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+    -- s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+    s.mytasklist = awful.widget.tasklist {
+        -- theme.tasklist_disable_icon == false,
+        screen          = s,
+        filter          = awful.widget.tasklist.filter.currenttags,
+        buttons         = tasklist_buttons,
+        style           = {
+            shape_border_width = 1,
+            shape_border_color = '#66666666',
+            -- shape              = gears.shape.powerline,
+        },
+        layout          = {
+            -- spacing_widget = {
+            --     {
+            --         forced_width = 5,
+            --         shape        = gears.shape.circle,
+            --         widget       = wibox.widget.separator
+            --     },
+            --     valign = 'center',
+            --     halign = 'center',
+            --     widget = wibox.container.place,
+            -- },
+            spacing        = 0,
+            layout         = wibox.layout.flex.horizontal,
+            max_widget_size = awful.screen.focused().workarea.width * 0.02,
+        },
+        -- Notice that there is *NO* wibox.wibox prefix, it is a template,
+        -- not a widget instance.
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            id     = 'icon_role',
+                            widget = wibox.widget.imagebox,
+                        },
+                        margins = 2,
+                        widget  = wibox.container.margin,
+                    },
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                left   = 4,
+                right  = 4,
+                widget = wibox.container.margin
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
+    }
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(18), bg = theme.bg_normal, fg = theme.fg_normal })
@@ -325,7 +378,7 @@ function theme.at_screen_connect(s)
             spr,
         },
         s.mytasklist, -- Middle widget
-        { -- Right widgets
+        {             -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             keyboardlayout,
@@ -348,7 +401,7 @@ function theme.at_screen_connect(s)
             wibox.container.background(cpu.widget, theme.bg_focus),
             arrl_dl,
             tempicon,
-            awful.widget.watch("awk '{printf substr ($0, 0, 2); print \"°C \"}' /sys/class/thermal/thermal_zone6/temp",  1),
+            awful.widget.watch("awk '{printf substr ($0, 0, 2); print \"°C \"}' /sys/class/thermal/thermal_zone6/temp", 1),
             -- arrl_ld,
             -- wibox.container.background(fsicon, theme.bg_focus),
             -- wibox.container.background(theme.fs.widget, theme.bg_focus),
