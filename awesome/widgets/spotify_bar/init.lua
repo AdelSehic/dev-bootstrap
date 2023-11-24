@@ -61,7 +61,7 @@ local function Widget(arguments)
                 )
 
                 if string.find(status, "Spotify is not running") ~= nil then
-                    WidgetUpdate(artist, separator, title, "SPOTIFY IS NOT RUNNING")
+                    WidgetUpdate(artist, separator, title, "   ")
                 elseif string.find(status, "Paused") ~= nil then
                     WidgetUpdate(artist, separator, title, "PAUSED")
                 elseif string.find(status, "Stopped") ~= nil then
