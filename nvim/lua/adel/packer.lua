@@ -9,11 +9,19 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.4',
-        -- or                            , branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' },
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
             { 'nvim-telescope/telescope-live-grep-args.nvim' },
             { 'debugloop/telescope-undo.nvim' }
         }
+    }
+
+    use {
+        'paopaol/telescope-git-diffs.nvim',
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "sindrets/diffview.nvim",
+        },
     }
 
     use({
@@ -70,7 +78,7 @@ return require('packer').startup(function(use)
     use('nvim-tree/nvim-tree.lua')
     use('nvim-tree/nvim-web-devicons')
     use('jose-elias-alvarez/null-ls.nvim')
-    use('lukas-reineke/lsp-format.nvim')
+    use('MunifTanjim/prettier.nvim')
     use('terrortylor/nvim-comment')
     use { 'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons' }
     use('famiu/bufdelete.nvim')

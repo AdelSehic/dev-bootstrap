@@ -9,7 +9,6 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
-local lsp_format = require('lsp-format')
 local inlayhints = require('lsp-inlayhints')
 local tabout = require('tabout')
 
@@ -26,7 +25,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-    vim.keymap.set({ "n", "v", "i" }, "<F5>", function() vim.lsp.buf.format() end)
+    -- vim.keymap.set({ "n", "v", "i" }, "<F5>", function() vim.lsp.buf.format() end)
 end)
 
 cmp.setup({
