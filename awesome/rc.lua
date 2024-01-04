@@ -110,7 +110,8 @@ autorun = true
 autorunApps =
 {
   "picom",
-  "glocom.desktop",
+  "gloCOM",
+  "thunderbird.desktop"
 }
 if autorun then
    for app = 1, #autorunApps do
@@ -857,5 +858,6 @@ tag.connect_signal("property::selected", backham)
 -- }}}
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("gtk-launch gloCOM.desktop")
-awful.spawn.with_shell("gtk-launch thunderbird.desktop")
+awful.spawn.with_shell("xset r rate 150 50 && setxkbmap -option caps:swapescape")
+-- awful.spawn.with_shell("gtk-launch thunderbird.desktop")
 awful.spawn.with_shell("nm-applet")
